@@ -38,9 +38,10 @@ TaskList.prototype.toJSON = function () {
  * is written back to the model after it is received from
  * the server.
  */
-TaskList.prototype.save = function (id) {
-   $.post('http://zhaw.herokuapp.com/task_lists/', 'id: this.id', function (data) {
-       
+TaskList.prototype.save = function () {
+   $.post('http://zhaw.herokuapp.com/task_lists/', JSON.stringify(new TaskList()), function (data) {
+       var t = JSON.parse(data);
+       //alert(t.id);
    });
 };
 

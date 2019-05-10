@@ -89,7 +89,7 @@ describe("TaskList", function() {
 
   describe("save (existing list)", function() {
     beforeEach(function() {
-      taskList.id = "0815"
+      taskList.id = "0815";
       taskList.createTask('first');
       taskList.createTask('second');
 
