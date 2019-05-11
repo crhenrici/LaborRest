@@ -47,11 +47,12 @@ TaskList.prototype.save = function () {
             taskList.id = t.id;
         });
     } else {
-        $.post('http://zhaw.herokuapp.com/task_lists/' + taskList.id, JSON.stringify(taskList), function (data) {
+       $.post('http://zhaw.herokuapp.com/task_lists/' + taskList.id, JSON.stringify(taskList), function (data) {
             var t = JSON.parse(data);
             taskList.id = t.id;
         });
     }
+    window.location.hash = taskList.id;
     return taskList;
 };
 

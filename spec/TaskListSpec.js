@@ -115,7 +115,7 @@ describe("TaskList", function() {
       expect(taskList.id).toEqual('0815');
     });
     // optional exercise
-    xit("sets the hash", function() {
+    it("sets the hash", function() {
       expect(window.location.hash).toEqual('#0815');
     });
   });
