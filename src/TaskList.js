@@ -39,10 +39,20 @@ TaskList.prototype.toJSON = function () {
  * the server.
  */
 TaskList.prototype.save = function () {
-   $.post('http://zhaw.herokuapp.com/task_lists/', JSON.stringify(new TaskList()), function (data) {
-       var t = JSON.parse(data);
-       //alert(t.id);
-   });
+    var taskList = this;
+    if(taskList.id == null) {
+
+        $.post('http://zhaw.herokuapp.com/task_lists/', JSON.stringify(taskList), function (data) {
+            var t = JSON.parse(data);
+            taskList.id = t.id;
+        });
+    } else {
+        $.post('http://zhaw.herokuapp.com/task_lists/' + taskList.id, JSON.stringify(taskList), function (data) {
+            var t = JSON.parse(data);
+            taskList.id = t.id;
+        });
+    }
+    return taskList;
 };
 
 /*
