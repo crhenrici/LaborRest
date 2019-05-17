@@ -27,7 +27,14 @@ TaskList.prototype.render = function () {
 };
 
 TaskList.prototype.toJSON = function () {
-    var obj = { id: this.id, title: this.title, tasks: this.tasks};
+    var obj = { id: this.id, title: this.title, tasks: []};
+    var i;
+    for(i = 0; i < this.tasks.length; i++) {
+        obj.tasks.push({
+            title: this.tasks[i].title,
+            done: this.tasks[i].done
+        });
+    }
     return JSON.stringify(obj);
 };
 
@@ -40,20 +47,22 @@ TaskList.prototype.toJSON = function () {
  */
 TaskList.prototype.save = function () {
     var taskList = this;
+    var url = 'http://zhaw.herokuapp.com/task_lists/';
+
     if(taskList.id == null) {
 
-        $.post('http://zhaw.herokuapp.com/task_lists/', JSON.stringify(taskList), function (data) {
+        $.post(url, this.toJSON(), function (data) {
             var t = JSON.parse(data);
             taskList.id = t.id;
+            window.location.hash = taskList.id;
         });
     } else {
-       $.post('http://zhaw.herokuapp.com/task_lists/' + taskList.id, JSON.stringify(taskList), function (data) {
-            var t = JSON.parse(data);
-            taskList.id = t.id;
+       $.post(url, this.toJSON(), function (data) {
+            var t = JSON.parse(data).id;
+            taskList.id = t;
+           window.location.hash = taskList.id;
         });
     }
-    window.location.hash = taskList.id;
-    return taskList;
 };
 
 /*
